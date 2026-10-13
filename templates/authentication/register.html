@@ -1,0 +1,162 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ro‘yxatdan o‘tish | Kangaroo Home</title>
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+</head>
+<body>
+    <main class="auth-layout">
+        <section class="auth-banner">
+            <a href="/" class="brand">
+                <span class="brand-icon">K</span>
+                <span>Kangaroo<span class="brand-light"> Home</span></span>
+            </a>
+
+            <div class="banner-content">
+                <span class="eyebrow">O‘Z UYINGIZ SARI BIRINCHI QADAM</span>
+                <h1>Yangi manzilingiz shu yerdan boshlanadi.</h1>
+                <p>
+                    Orzuingizdagi uy yoki kvartirani toping,
+                    ko‘chmas mulkingizni soting yoki ijaraga bering.
+                </p>
+                <div class="banner-stats">
+                    <div>
+                        <strong>01</strong>
+                        <span>Hisob yarating</span>
+                    </div>
+                    <div>
+                        <strong>02</strong>
+                        <span>Uylarni kashf eting</span>
+                    </div>
+                    <div>
+                        <strong>03</strong>
+                        <span>Yangi manzil toping</span>
+                    </div>
+                </div>
+            </div>
+
+            <p class="banner-footer">O‘z uyim — o‘lan to‘shagim.</p>
+        </section>
+
+        <section class="auth-main">
+            <div class="auth-card">
+                <div class="mobile-brand">
+                    <span class="brand-icon">K</span>
+                    <strong>Kangaroo Home</strong>
+                </div>
+
+                <div class="auth-heading">
+                    <span class="eyebrow">YANGI HISOB</span>
+                    <h2>Hisob yarating</h2>
+                    <p>Platformadan foydalanish uchun ma’lumotlaringizni kiriting.</p>
+                </div>
+
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="message">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+
+                {% if form.errors %}
+                    <div class="message error">
+                        Kiritilgan ma’lumotlarni tekshiring.
+                        {{ form.errors }}
+                    </div>
+                {% endif %}
+
+                <form method="post" action="">
+                    {% csrf_token %}
+
+                    <div class="form-group">
+                        <label for="full_name">To‘liq ism</label>
+                        <input
+                            type="text"
+                            id="full_name"
+                            name="full_name"
+                            placeholder="Masalan, Javlonbek Saidov"
+                            autocomplete="name"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="username">Foydalanuvchi nomi</label>
+                        <input
+                            type="text"
+                            id="username"
+                            name="username"
+                            placeholder="username"
+                            autocomplete="username"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone_number">Telefon raqami</label>
+                        <input
+                            type="tel"
+                            id="phone_number"
+                            name="phone_number"
+                            placeholder="+998 90 123 45 67"
+                            autocomplete="tel"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="password">Parol</label>
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Kamida 8 belgi"
+                                autocomplete="new-password"
+                                minlength="8"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="confirm_password">Parolni tasdiqlang</label>
+                            <input
+                                type="password"
+                                id="confirm_password"
+                                name="confirm_password"
+                                placeholder="Parolni takrorlang"
+                                autocomplete="new-password"
+                                minlength="8"
+                                required
+                            >
+                        </div>
+                    </div>
+
+                    <label class="terms">
+                        <input type="checkbox" name="terms" required>
+                        <span>
+                            Foydalanish shartlari va maxfiylik siyosatiga roziman.
+                        </span>
+                    </label>
+
+                    <button type="submit" class="auth-button">
+                        Hisob yaratish <span>→</span>
+                    </button>
+                </form>
+
+                <p class="auth-switch">
+                    Hisobingiz bormi?
+                    <a href="{% url 'authentication:login' %}">Tizimga kiring</a>
+                </p>
+
+                <p class="auth-note">
+                    Ma’lumotlaringiz xavfsizligi biz uchun muhim.
+                </p>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

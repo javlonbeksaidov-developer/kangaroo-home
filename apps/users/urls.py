@@ -1,9 +1,9 @@
 from django.urls import path
 
-from .views import *
+from .views import user
 
-app_name = 'users'
+app_name = "users"
 
 urlpatterns = [
-    path('', homepage, name="homepage")
+    path("user/", user, name="user"),
 ]

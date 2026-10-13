@@ -1,0 +1,115 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tizimga kirish | Kangaroo Home</title>
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+</head>
+<body>
+    <main class="auth-layout">
+        <section class="auth-banner">
+            <a href="/" class="brand">
+                <span class="brand-icon">K</span>
+                <span>Kangaroo<span class="brand-light"> Home</span></span>
+            </a>
+
+            <div class="banner-content">
+                <span class="eyebrow">SIZNING UYINGIZ — SIZNING TANLOVINGIZ</span>
+                <h1>O‘z uyingizni topish vaqti keldi.</h1>
+                <p>
+                    Sotuvdagi va ijaradagi uylarni bir joyda ko‘ring.
+                    Sizga mos manzilni osonroq toping.
+                </p>
+
+                <div class="banner-stats">
+                    <div>
+                        <strong>01</strong>
+                        <span>Hisobga kiring</span>
+                    </div>
+                    <div>
+                        <strong>02</strong>
+                        <span>Takliflarni ko‘ring</span>
+                    </div>
+                    <div>
+                        <strong>03</strong>
+                        <span>Tanlov qiling</span>
+                    </div>
+                </div>
+            </div>
+
+            <p class="banner-footer">O‘z uyim — o‘lan to‘shagim.</p>
+        </section>
+
+        <section class="auth-main">
+            <div class="auth-card login-card">
+                <div class="mobile-brand">
+                    <span class="brand-icon">K</span>
+                    <strong>Kangaroo Home</strong>
+                </div>
+
+                <div class="auth-heading">
+                    <span class="eyebrow">XUSH KELIBSIZ</span>
+                    <h2>Yana ko‘rishganimizdan xursandmiz!</h2>
+                    <p>Hisobingizga kirish uchun ma’lumotlaringizni kiriting.</p>
+                </div>
+
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="message">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+
+                {% if form.errors %}
+                    <div class="message error">
+                        Login yoki parol noto‘g‘ri.
+                    </div>
+                {% endif %}
+
+                <form method="post" action="">
+                    {% csrf_token %}
+
+                    <div class="form-group">
+                        <label for="username">Foydalanuvchi nomi</label>
+                        <input
+                            type="text"
+                            id="username"
+                            name="username"
+                            placeholder="Username kiriting"
+                            autocomplete="username"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Parol</label>
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Parolingizni kiriting"
+                            autocomplete="current-password"
+                            required
+                        >
+                    </div>
+
+                    <button type="submit" class="auth-button">
+                        Tizimga kirish <span>→</span>
+                    </button>
+                </form>
+
+                <p class="auth-switch">
+                    Hali hisobingiz yo‘qmi?
+                    <a href="{% url 'authentication:register' %}">Ro‘yxatdan o‘ting</a>
+                </p>
+
+                <p class="auth-note">
+                    Kangaroo Home — yangi manzilingizga yo‘l.
+                </p>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
