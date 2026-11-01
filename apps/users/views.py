@@ -1,6 +1,6 @@
 from django.shortcuts import render
+from django.views.generic import TemplateView
 
-# Create your views here.
 
-def user(request):
-    return render(request, "base.html")
+class ProfilePage(TemplateView):
+    template_name = "user/profile.html"

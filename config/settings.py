@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'apps.main',
     'apps.users',
     'apps.authentication',
+    'apps.telegram_bot',
 ]
 
 MIDDLEWARE = [
@@ -83,6 +84,8 @@ DATABASES = {
     }
 }
 
+LOGIN_URL = '/authentication/login/'
+
 
 # Password validation
 # https://docs.djangoproject.com/en/6.1/ref/settings/#auth-password-validators
@@ -123,6 +126,9 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR/'staticfiles'
 ]
+
+MEDIA_URL = "media/"
+MEDIA_ROOT = BASE_DIR/'media'
 
 # Email
 # https://docs.djangoproject.com/en/6.1/topics/email/#topic-email-configuration
