@@ -1,162 +1,86 @@
-
-{% load static %}
 <!DOCTYPE html>
+{% load static %}
 <html lang="uz">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ro‘yxatdan o‘tish | Kangaroo Home</title>
-    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#06170F">
+  <title>Ro'yxatdan o'tish — Kangaroo Home</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/auth.css' %}">
 </head>
 <body>
-    <main class="auth-layout">
-        <section class="auth-banner">
-            <a href="/" class="brand">
-                <span class="brand-icon">K</span>
-                <span>Kangaroo<span class="brand-light"> Home</span></span>
-            </a>
+  <div class="scene" id="scene" aria-hidden="true"></div>
+  <a class="brand" href="index.html" aria-label="Kangaroo Home — bosh sahifa">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M4 15 16 4l12 11v13H4z" fill="#9FE3B0"/><rect x="13" y="17" width="6" height="11" rx="1" fill="#0E2E24"/><circle cx="16" cy="12" r="2" fill="#FFC24D"/></svg>
+    Kangaroo Home
+  </a>
+  <p class="meter" id="meter" aria-live="polite"><i></i><span id="meterText">0 / 6 deraza yondi</span></p>
 
-            <div class="banner-content">
-                <span class="eyebrow">O‘Z UYINGIZ SARI BIRINCHI QADAM</span>
-                <h1>Yangi manzilingiz shu yerdan boshlanadi.</h1>
-                <p>
-                    Orzuingizdagi uy yoki kvartirani toping,
-                    ko‘chmas mulkingizni soting yoki ijaraga bering.
-                </p>
-                <div class="banner-stats">
-                    <div>
-                        <strong>01</strong>
-                        <span>Hisob yarating</span>
-                    </div>
-                    <div>
-                        <strong>02</strong>
-                        <span>Uylarni kashf eting</span>
-                    </div>
-                    <div>
-                        <strong>03</strong>
-                        <span>Yangi manzil toping</span>
-                    </div>
-                </div>
-            </div>
+  <main class="auth">
+    <form class="card" id="authForm" data-mode="register" method="post" novalidate>
+      <h1>Yangi uyga xush kelibsiz</h1>
+      <p class="lead">O'z uyim — o'lan to'shagim. Hisob yarating.</p>
 
-            <p class="banner-footer">O‘z uyim — o‘lan to‘shagim.</p>
-        </section>
+      <p class="form-error" id="formError" role="alert" hidden></p>
+      <p class="form-note" id="formNote" hidden></p>
 
-        <section class="auth-main">
-            <div class="auth-card">
-                <div class="mobile-brand">
-                    <span class="brand-icon">K</span>
-                    <strong>Kangaroo Home</strong>
-                </div>
+      <div class="row">
+        <div class="field" data-field="first_name">
+          <div class="label-row"><label for="first_name">Ism</label></div>
+          <input id="first_name" name="first_name" type="text" autocomplete="given-name" placeholder="Ismingiz" required>
+          <p class="msg" role="alert"></p>
+        </div>
+        <div class="field" data-field="last_name" data-optional>
+          <div class="label-row"><label for="last_name">Familiya <small>(ixtiyoriy)</small></label></div>
+          <input id="last_name" name="last_name" type="text" autocomplete="family-name" placeholder="Familiyangiz">
+          <p class="msg" role="alert"></p>
+        </div>
+      </div>
 
-                <div class="auth-heading">
-                    <span class="eyebrow">YANGI HISOB</span>
-                    <h2>Hisob yarating</h2>
-                    <p>Platformadan foydalanish uchun ma’lumotlaringizni kiriting.</p>
-                </div>
+      <div class="row stack-sm">
+        <div class="field" data-field="username">
+          <div class="label-row"><label for="username">Foydalanuvchi nomi</label></div>
+          <input id="username" name="username" type="text" autocomplete="username" autocapitalize="none" spellcheck="false" placeholder="kangaroo_01" required>
+          <p class="msg" role="alert"></p>
+        </div>
+        <div class="field" data-field="email">
+          <div class="label-row"><label for="email">Email</label></div>
+          <input id="email" name="email" type="email" autocomplete="email" placeholder="ism@mail.com" required>
+          <p class="msg" role="alert"></p>
+        </div>
+      </div>
 
-                {% if messages %}
-                    {% for message in messages %}
-                        <div class="message">{{ message }}</div>
-                    {% endfor %}
-                {% endif %}
+      <div class="row">
+        <div class="field" data-field="password">
+          <div class="label-row">
+            <label for="password">Parol</label>
+            <div class="strength" data-level="0" aria-hidden="true"><i></i><i></i><i></i><i></i><span></span></div>
+          </div>
+          <div class="control has-toggle">
+            <input id="password" name="password" type="password" autocomplete="new-password" placeholder="8+ belgi" required>
+            <button class="toggle" type="button" aria-pressed="false" aria-label="Parolni ko'rsatish yoki yashirish"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/><path class="slash" d="M4 4l16 16"/></svg></button>
+          </div>
+          <p class="msg" role="alert"></p>
+        </div>
+        <div class="field" data-field="password_confirm">
+          <div class="label-row"><label for="password_confirm">Parolni takrorlang</label></div>
+          <div class="control has-toggle">
+            <input id="password_confirm" name="password_confirm" type="password" autocomplete="new-password" placeholder="Qayta kiriting" required>
+            <button class="toggle" type="button" aria-pressed="false" aria-label="Parolni ko'rsatish yoki yashirish"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/><path class="slash" d="M4 4l16 16"/></svg></button>
+          </div>
+          <p class="msg" role="alert"></p>
+        </div>
+      </div>
 
-                {% if form.errors %}
-                    <div class="message error">
-                        Kiritilgan ma’lumotlarni tekshiring.
-                        {{ form.errors }}
-                    </div>
-                {% endif %}
+      <button class="btn" type="submit">Hisob yaratish</button>
+      <p class="switch">Hisobingiz bormi? <a href="{% url 'authentication:login' %}">Kirish</a></p>
+    </form>
+  </main>
 
-                <form method="post" action="">
-                    {% csrf_token %}
-
-                    <div class="form-group">
-                        <label for="full_name">To‘liq ism</label>
-                        <input
-                            type="text"
-                            id="full_name"
-                            name="full_name"
-                            placeholder="Masalan, Javlonbek Saidov"
-                            autocomplete="name"
-                            required
-                        >
-                    </div>
-
-                    <div class="form-group">
-                        <label for="username">Foydalanuvchi nomi</label>
-                        <input
-                            type="text"
-                            id="username"
-                            name="username"
-                            placeholder="username"
-                            autocomplete="username"
-                            required
-                        >
-                    </div>
-
-                    <div class="form-group">
-                        <label for="phone_number">Telefon raqami</label>
-                        <input
-                            type="tel"
-                            id="phone_number"
-                            name="phone_number"
-                            placeholder="+998 90 123 45 67"
-                            autocomplete="tel"
-                            required
-                        >
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="password">Parol</label>
-                            <input
-                                type="password"
-                                id="password"
-                                name="password"
-                                placeholder="Kamida 8 belgi"
-                                autocomplete="new-password"
-                                minlength="8"
-                                required
-                            >
-                        </div>
-
-                        <div class="form-group">
-                            <label for="confirm_password">Parolni tasdiqlang</label>
-                            <input
-                                type="password"
-                                id="confirm_password"
-                                name="confirm_password"
-                                placeholder="Parolni takrorlang"
-                                autocomplete="new-password"
-                                minlength="8"
-                                required
-                            >
-                        </div>
-                    </div>
-
-                    <label class="terms">
-                        <input type="checkbox" name="terms" required>
-                        <span>
-                            Foydalanish shartlari va maxfiylik siyosatiga roziman.
-                        </span>
-                    </label>
-
-                    <button type="submit" class="auth-button">
-                        Hisob yaratish <span>→</span>
-                    </button>
-                </form>
-
-                <p class="auth-switch">
-                    Hisobingiz bormi?
-                    <a href="{% url 'authentication:login' %}">Tizimga kiring</a>
-                </p>
-
-                <p class="auth-note">
-                    Ma'lumotlaringiz xavfsizligi biz uchun muhim.
-                </p>
-            </div>
-        </section>
-    </main>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="{% static 'js/auth.js' %}"></script>
 </body>
 </html>
