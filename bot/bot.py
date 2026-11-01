@@ -1,3 +1,19 @@
+import os
+import sys
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+sys.path.insert(0, str(BASE_DIR))
+
+# Django settings
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
+
+import django
+
+django.setup()
+
+# Telegram bot
 from decouple import config
 from telebot import TeleBot
 
@@ -5,15 +21,9 @@ BOT_TOKEN = config("BOT_TOKEN")
 
 bot = TeleBot(token=BOT_TOKEN)
 
+from apps.telegram_bot.users.bot import register_handlers as user
 
-@bot.message_handler(commands=["start"])
-def welcome(msg):
-    bot.send_message(msg.chat.id, text=f"Welcome {msg.from_user.first_name} !")
-
-
-@bot.message_handler(commands=["help"])
-def help(msg):
-    bot.send_message(msg.chat.id, text="Ko'chmas mulk")
+user(bot)
 
 
 if __name__ == "__main__":

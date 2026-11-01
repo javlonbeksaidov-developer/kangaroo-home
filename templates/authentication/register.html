@@ -252,16 +252,36 @@
         <div class="login-box">
             <h2>Login</h2>
 
-            <form action="#" method="post">
+            <form action="" method="post">
                 {%  csrf_token  %}
+                <div class="input-box">
+                    <input type="text" name="first_name" required>
+                    <label>Ism</label>
+                </div>
+
+                <div class="input-box">
+                    <input type="text" name="last_name" required>
+                    <label>Familiya</label>
+                </div>
+
                 <div class="input-box">
                     <input type="text" name="username" required>
                     <label>Username</label>
                 </div>
 
                 <div class="input-box">
+                    <input type="email" name="email" required>
+                    <label>Email</label>
+                </div>
+
+                <div class="input-box">
                     <input type="password" name="password" autocomplete="current-password" required>
                     <label>Password</label>
+                </div>
+
+                <div class="input-box">
+                    <input type="password" name="password_confirm" autocomplete="current-password" required>
+                    <label>Confirm Password</label>
                 </div>
 
                 <button class="btn" type="submit">
