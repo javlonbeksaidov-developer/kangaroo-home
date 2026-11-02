@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'apps.users',
     'apps.authentication',
     'apps.telegram_bot',
+    'apps.mulk',
 ]
 
 MIDDLEWARE = [
